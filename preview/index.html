@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,"><title>DSH × 蔚蓝档案 · 白子主题预览</title><link rel="stylesheet" href="preview.css"></head>
+<body>
+<div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-logo"><span class="logo-halo"></span><b>DSH</b><small>SCHALE OS</small></div>
+    <nav class="rail-nav">
+      <button class="nav-icon active" title="会话"><span>⌁</span></button><button class="nav-icon" title="任务"><span>◇</span></button><button class="nav-icon" title="资料"><span>▤</span></button>
+    </nav>
+    <div class="rail-bottom"><button class="avatar">先</button><i class="online"></i></div>
+  </aside>
+
+  <aside class="sidebar">
+    <header class="side-head"><div><span class="eyebrow">SCHALE NETWORK</span><h1>任务档案</h1></div><button class="new-chat">＋</button></header>
+    <div class="search"><span>⌕</span><input placeholder="搜索会话 / 项目"><kbd>⌘K</kbd></div>
+    <div class="section-label"><span>TODAY</span><b>03</b></div>
+    <div class="session active"><i></i><div><strong>白子主题插件设计</strong><small>正在实现桌宠交互</small></div><time>14:32</time></div>
+    <div class="session"><i></i><div><strong>修复构建脚本</strong><small>检查运行环境</small></div><time>12:08</time></div>
+    <div class="session"><i></i><div><strong>前端性能分析</strong><small>汇总优化建议</small></div><time>09:41</time></div>
+    <div class="section-label"><span>YESTERDAY</span><b>02</b></div>
+    <div class="session muted"><i></i><div><strong>数据看板原型</strong><small>已归档</small></div><time>昨天</time></div>
+    <div class="side-status"><span class="pulse"></span><div><b>系统在线</b><small>DeepSeek Harness · Web</small></div><em>01</em></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="top-title"><span class="diamond"></span><div><small>PROJECT / FRONTEND</small><strong>白子主题插件设计</strong></div></div>
+      <div class="top-actions"><span class="model"><i></i> DeepSeek V3.2</span><button>···</button></div>
+    </header>
+    <section class="chat">
+      <div class="date-divider"><span></span><b>2026 / 08 / 15</b><span></span></div>
+      <article class="message user"><div class="msg-meta"><b>老师</b><time>14:30</time></div><div class="bubble">帮我设计一个有关蔚蓝档案的 DSH 主题插件，增加类似 Codex 宠物，使用白子的形象。</div></article>
+      <article class="message assistant"><div class="agent-avatar"><span></span>S</div><div class="msg-body"><div class="msg-meta"><b>SCHALE ASSISTANT</b><time>14:31</time></div><div class="bubble"><p>收到。我会把插件设计成轻盈的学院蓝界面，并加入一个可拖动的白子风格桌宠。</p><div class="feature-grid"><div><i>01</i><b>学院蓝主题</b><small>磨砂面板、斜切角、战术网格</small></div><div><i>02</i><b>状态感知</b><small>思考、工具、批准、完成与异常</small></div><div><i>03</i><b>可交互桌宠</b><small>拖动、缩放、对话与动画控制</small></div></div><div class="task-row"><span class="check">✓</span><div><b>创建插件结构</b><small>package.json · Cordis patch · 客户端 bundle</small></div><em>DONE</em></div><div class="task-row running"><span class="spinner"></span><div><b>实现主题与白子桌宠</b><small>正在生成原创 SVG 角色与状态动画</small></div><em>RUNNING</em></div></div></div></article>
+    </section>
+    <footer class="composer"><div class="composer-box"><div class="prompt-line"><span class="prompt-mark">✦</span><textarea rows="1" placeholder="给 DSH 发送消息…"></textarea><button class="send">↑</button></div><div class="composer-tools"><div><button>＋</button><button>⌘</button><span>本地工作区</span></div><small>Enter 发送 · Shift + Enter 换行</small></div></div><div class="legal">AI 可能会犯错，请检查重要信息。</div></footer>
+  </main>
+</div>
+
+<div id="pet" data-phase="working">
+  <div class="pet-bubble"><div class="pet-kicker">ABYDOS // <span id="phaseLabel">执行中</span></div><div class="pet-text" id="phaseText">目标确认，开始执行。</div></div>
+  <div class="pet-character" id="petCharacter"></div><div class="pet-name">SHIROKO // 01</div><div class="pet-dot"></div>
+</div>
+<div class="demo-controls"><span>状态预览</span><button data-phase="idle">待机</button><button data-phase="thinking">分析</button><button class="selected" data-phase="working">执行</button><button data-phase="approval">批准</button><button data-phase="done">完成</button><button data-phase="failed">异常</button></div>
+<script src="preview.js"></script>
+</body></html>
+

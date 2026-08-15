@@ -1,0 +1,8 @@
+node_modules/
+.npm-cache/
+*.log
+dsh-web.stdout.log
+dsh-web.stderr.log
+.DS_Store
+Thumbs.db
+dist/
