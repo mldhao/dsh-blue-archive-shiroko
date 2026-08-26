@@ -1,7 +1,7 @@
 {
   "name": "dsh-blue-archive-shiroko",
-  "version": "0.5.1",
-  "description": "Blue Archive-inspired DSH theme with a Shiroko desktop companion, Codex-style reply bubbles, petting effects, completion chime, and autonomous interactions.",
+  "version": "0.6.0",
+  "description": "Blue Archive-inspired DSH theme with a Shiroko desktop companion, secure DeepSeek balance lookup, low-balance alerts, Codex-style reply bubbles, and petting effects.",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -36,7 +36,8 @@
     "client": {
       "platform": "web",
       "inject": [
-        "@deepseek-ai/dsh-client-ui-theme"
+        "@deepseek-ai/dsh-client-ui-theme",
+        "@deepseek-ai/dsh-client-connection"
       ]
     }
   },
@@ -49,7 +50,8 @@
     "url": "https://github.com/mldhao/dsh-blue-archive-shiroko/issues"
   },
   "scripts": {
-    "check": "node --check lib/client.js && node --check lib/index.js",
+    "check": "node --check lib/client.js && node --check lib/index.js && node --check tests/balance.test.js",
+    "test": "node --test tests/*.test.js",
     "pack:release": "npm pack --pack-destination dist"
   }
 }

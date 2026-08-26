@@ -2,6 +2,28 @@
 
 All notable changes to this project are documented here. 重要更新记录如下。
 
+## 0.6.0 — 2026-08-26
+
+### 中文
+
+- 短按白子改为查询 DeepSeek 官方 API 余额，并显示币种与可用金额。
+- 新增仅限本机的主机端余额 RPC；`DEEPSEEK_API_KEY` 由 DSH 凭据服务读取，不进入浏览器或本地存储。
+- 新增可配置的低余额阈值和低余额警告状态。
+- 新增角色点击音与低余额警告音；警告音带 60 秒冷却。
+- 长按头部继续触发抚摸，拖动超过 8px 不会误触查询或抚摸。
+- 快捷设置改由独立齿轮按钮打开，并加入手动余额查询入口。
+- 增加余额响应解析、缺少凭据和错误脱敏测试。
+
+### English
+
+- Tapping Shiroko now queries the official DeepSeek API balance and shows the currency and available amount.
+- Added a loopback-only host RPC. `DEEPSEEK_API_KEY` is resolved by DSH's credential service and never enters the browser or local storage.
+- Added a configurable low-balance threshold and warning state.
+- Added a character click sound and low-balance warning with a 60-second cooldown.
+- Holding the head still triggers petting; moving more than 8px avoids accidental lookup or petting.
+- Quick controls now open from a dedicated gear button and include manual balance lookup.
+- Added tests for response normalization, missing credentials, and error redaction.
+
 ## 0.5.1 — 2026-08-15
 
 ### 中文

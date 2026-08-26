@@ -2,7 +2,7 @@
 
 [简体中文](README.md) · [English](README.en.md)
 
-An unofficial fan-made theme plugin for the **DeepSeek Harness (`dsh`) web client**. It gives DSH a Blue Archive-inspired academy-blue interface and adds a draggable, pettable Shiroko desktop companion that can display the current assistant response.
+An unofficial fan-made theme plugin for the **DeepSeek Harness (`dsh`) web client**. It gives DSH a Blue Archive-inspired academy-blue interface and adds a draggable, pettable Shiroko desktop companion that can display the current assistant response and securely query the DeepSeek API balance.
 
 > [!IMPORTANT]
 > This project is an unofficial fan work and is not affiliated with, endorsed by, or sponsored by NEXON Games, NEXON, Yostar, Blue Archive, or OpenAI. The source code is licensed under MIT. Character names, character likenesses, and user-provided images are not covered by the MIT license. Make sure you have permission before publishing or redistributing those assets. See [ASSET_NOTICE.md](ASSET_NOTICE.md).
@@ -17,18 +17,24 @@ An unofficial fan-made theme plugin for the **DeepSeek Harness (`dsh`) web clien
 - **Shiroko desktop companion**
   - Drag, resize, hide, reset position, and toggle animations
   - Autonomous idle actions such as greeting, observing, stretching, and reacting
-  - Click the body or name plate to open the quick controls
+  - Tap the character to query the DeepSeek API balance; use the dedicated gear button for quick controls
+- **Secure balance lookup**
+  - The host half reads DSH's configured `DEEPSEEK_API_KEY`; the key never enters the browser or `localStorage`
+  - Calls the official `https://api.deepseek.com/user/balance` endpoint
+  - Shows currency and available balance with a configurable low-balance threshold
+  - Uses a loopback-only RPC channel to limit exposure of credentials and account data
 - **Codex-style compact dialogue bubbles**
   - Reads the current assistant response and splits it into lightweight lines
   - Streaming sync, typewriter rendering, a blinking cursor, and post-completion rotation
   - Keeps up to 8 recent lines and prioritizes the live assistant response while generation is active
 - **Petting interaction**
-  - Tap the head or hold it for about 420ms
+  - Hold the head for about 420ms
   - Includes a nod, pink glow ring, floating hearts, and a dedicated reaction line
   - Moving more than 8px cancels petting to avoid accidental activation while dragging
-- **Completion chime**
-  - A gentle sound synthesized with the Web Audio API after an assistant response completes
-  - No official voice or sound assets are bundled; the chime can be disabled
+- **Companion sounds**
+  - Includes a character click sound, assistant-completion chime, and low-balance warning
+  - The low-balance warning has a 60-second cooldown to prevent repeated alerts
+  - No official voice or sound assets are bundled; sounds can be disabled
 - **Responsive settings UI**
   - Fully centered on desktop and converted to horizontal tabs on narrow screens
   - Respects `prefers-reduced-motion`
@@ -37,6 +43,7 @@ An unofficial fan-made theme plugin for the **DeepSeek Harness (`dsh`) web clien
 
 - A working DeepSeek Harness / `dsh` installation
 - The DSH web client enabled
+- A valid `DEEPSEEK_API_KEY` configured in DSH for balance lookup
 - A modern Chromium-based browser such as Chrome or Edge
 
 ## Installation
@@ -46,13 +53,13 @@ An unofficial fan-made theme plugin for the **DeepSeek Harness (`dsh`) web clien
 1. Download the following file from the GitHub **Releases** page:
 
    ```text
-   dsh-blue-archive-shiroko-0.5.1.tgz
+   dsh-blue-archive-shiroko-0.6.0.tgz
    ```
 
 2. Run the command below and replace the path with your actual download location:
 
    ```powershell
-   dsh plugin --profile web add "C:\path\to\dsh-blue-archive-shiroko-0.5.1.tgz"
+   dsh plugin --profile web add "C:\path\to\dsh-blue-archive-shiroko-0.6.0.tgz"
    ```
 
 3. Fully restart DSH Web, then press `Ctrl + F5` in the browser.
@@ -69,11 +76,12 @@ Restart DSH Web and refresh the page. A directory install is useful for developm
 
 ## Usage
 
-- **Drag the character** to change its position; the position is saved automatically.
-- **Tap or hold the head** to trigger the petting effect.
-- **Click the body or name plate** to open or close the quick panel.
+- **Tap the character** to play the click sound and query the DeepSeek API balance.
+- **Hold the head** for about 420ms to trigger the petting effect.
+- **Drag the character** more than 8px to move it without triggering balance lookup or petting; the position is saved automatically.
+- **Click the gear button** to open or close the quick panel.
 - Use **Change action** in the quick panel to trigger an autonomous interaction immediately.
-- Open **Shiroko Theme** in DSH settings to control visibility, reply sync, completion sound, animation, autonomous actions, and scale.
+- Open **Shiroko Theme** in DSH settings to control visibility, reply sync, companion sounds, low-balance threshold, animation, autonomous actions, and scale, or to query the balance manually.
 - Use **Reset companion position** if the character was dragged outside the viewport.
 
 Settings are stored in the current browser's `localStorage`. Autonomous interactions are enabled by default and run after roughly 12–25 seconds of idle time. They pause during tasks, while the quick panel is open, or while the page is hidden.
@@ -93,6 +101,13 @@ If the page does not change after installation:
 3. Press `Ctrl + F5` to bypass the browser cache.
 4. Open DSH settings and confirm the theme/plugin is enabled.
 5. If an older package was installed, remove it before installing the latest release.
+
+If balance lookup fails:
+
+1. Confirm that `DEEPSEEK_API_KEY` is configured and valid in DSH model settings.
+2. Fully restart DSH Web so the 0.6.0 host-side RPC is loaded; a browser refresh alone is not enough.
+3. Balance lookup is loopback-only. A DSH page opened from another device on the LAN is intentionally rejected.
+4. Custom OpenAI-compatible gateways usually do not expose the official DeepSeek balance endpoint; this feature queries the official DeepSeek account by default.
 
 Removal commands may differ between DSH versions. Check the CLI available on your system:
 
@@ -118,6 +133,12 @@ Check JavaScript syntax:
 
 ```powershell
 npm run check
+```
+
+Run balance parsing and credential-boundary tests:
+
+```powershell
+npm test
 ```
 
 Create the installable package:
@@ -146,6 +167,8 @@ dsh-blue-archive-shiroko/
 │  ├─ index.html
 │  ├─ preview.css
 │  └─ preview.js
+├─ tests/
+│  └─ balance.test.js
 ├─ assets/
 │  ├─ screenshot.png
 │  ├─ screenshot-mobile.png
@@ -171,12 +194,14 @@ After replacing the character image, also update the embedded `PET_IMAGE` in `li
 
 - “Codex-style” refers only to compact lines, typewriter rendering, and status feedback. This project does not copy Codex's official pet artwork, voice, or sound effects.
 - Reply sync depends on DSH's current DOM structure, including `[data-chat-flow-kind="assistant-step"]` and the `aria-label` of the Stop generating button. Major DSH updates may require selector changes.
-- The completion chime can be skipped when browser audio is not authorized, the page is in the background, or Web Audio is restricted by the system.
+- Balance lookup supports the official DeepSeek API and `DEEPSEEK_API_KEY` by default; it does not assume third-party compatible gateways implement a balance endpoint.
+- For security, the balance RPC only accepts a DSH page served on loopback. Remote devices cannot query the balance.
+- Click, completion, and warning sounds can be skipped when browser audio is not authorized, the page is in the background, or Web Audio is restricted by the system.
 - Companion state is inferred from the page DOM without a backend service. Third-party themes or DSH markup changes may affect detection.
 
 ## Version
 
-Current version: **0.5.1**. See [CHANGELOG.md](CHANGELOG.md) for details.
+Current version: **0.6.0**. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## License and notices
 

@@ -1,3 +1,7 @@
 - insert:
     - id: blue-archive-shiroko
       name: 'dsh-blue-archive-shiroko'
+      config:
+        balanceEndpoint: 'https://api.deepseek.com/user/balance'
+        credentialRef: 'DEEPSEEK_API_KEY'
+        timeoutMs: 10000
