@@ -7,7 +7,7 @@
 > [!IMPORTANT]
 > 本项目是非官方同人作品，与 NEXON Games、NEXON、Yostar、《蔚蓝档案 / Blue Archive》或 OpenAI 无隶属、授权或合作关系。代码采用 MIT 许可证；角色名称、角色形象及用户提供的图片不包含在 MIT 授权范围内。发布或再分发前请确认你拥有相关素材的使用权。详情见 [ASSET_NOTICE.md](ASSET_NOTICE.md)。
 
-![桌面端预览](https://raw.githubusercontent.com/kingOfSoySauce/dsh-skin-market/main/site/public/skin-screenshots/mldhao__dsh-blue-archive-shiroko/313f6c5bc89b00b18dc2baa9f719e8a3f12e0a72/home.gif)
+![桌面端预览](assets/screenshot.gif)
 
 ## 功能亮点
 
